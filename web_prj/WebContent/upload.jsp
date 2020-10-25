@@ -7,11 +7,11 @@
 		<title>Home</title>
 	</head>
 <body>
-	<h3>File Upload:</h3>
+	<h3>문장 검사 시작하기</h3>
 	Select a file to upload:
 	<br />
-	<form action='load.jsp' method='post' enctype="multipart/form-data">
-		<input type="file" name="file" size="100">
+	<form action='read.jsp' method='post' enctype="multipart/form-data">
+		<input type="file" name="file">
 		<br><br>
 		<input type="submit" value="Proceed">
 	</form>

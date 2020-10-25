@@ -28,7 +28,7 @@ public class Select extends HttpServlet {
 			list = dao.select();
 		} else {
 			list = dao.where(where);	
-			out.println("현재 where 절 : " + where);
+			out.println("<h5> * 현재 where 절 : " + where + "</h5>");
 		}
 		
 		out.println("<style>"
@@ -71,12 +71,14 @@ public class Select extends HttpServlet {
 		out.println("</div>");
 		out.println("</fieldset><br>");
 		
+		out.println("<h4>where 조건절 추가</h4>");
 		out.println("<form action=\"select\" method=\"post\">");
 		out.println("<textarea id=\"where\" name=\"where\" rows=\"3\" cols=\"40\">"
 				+ " column : sen_id / sen_org / sen_tag "
 				+ "</textarea>"
-				+ "<input type=\"submit\" value=\"제출\">"
+				+ "<input type=\"submit\" value=\"질의\">"
 				+ "</form>");
+		out.println("<form action=home.jsp><input type=\"submit\" value=\"Home\"></form>");
 		
 	}
 

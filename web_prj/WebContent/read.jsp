@@ -5,17 +5,49 @@
 <%@page import="java.util.List"%>
 
 <%@page import="com.servlet.LoadUtils" %>
-
+<%@page import="com.servlet.Inspect" %>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 
 
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>load</title>
-</head>
+	<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>read</title>
+	
+	<style>
+	table {
+	  border-collapse: collapse;
+	  border-spacing: 0;
+	  width: 100%;
+	  border: 1px solid #ddd;
+	}
+	
+	th, td {
+	  text-align: center;
+	  padding: 16px;
+	}
+	
+	th:first-child, td:first-child {
+	  text-align: left;
+	}
+	
+	tr:nth-child(even) {
+	  background-color: #f2f2f2
+	}
+	
+	.fa-check {
+	  color: green;
+	}
+	
+	.fa-remove {
+	  color: red;
+	}
+	</style>
+	
+	</head>
 <body>
 	<%
 	String saveDir = "E:\\Git\\1st_web\\upload";
@@ -37,21 +69,17 @@
 	원래 파일명 : <%=multipartRequest.getOriginalFileName("file")%><br>
 	<br>
 
+	
+	<form action="inspect" method="post">
+		<input type="submit" value="proceed">
+	</form>
+	
+	
 	<table>
-		<tr>
-			<td style="padding: 10px;">
-				<form action="inspect" method="post">
-					<input type="submit" value="inspect">
-					
-				</form>
-			</td>
-			<td style="padding: 10px;">
-				<form action="Org.jsp" method="post">
-					<input type="submit" value="To Org">
-				</form>
-			</td>
-		</tr>
-	</table>
+	  <tr>
+	    <th style="width:50%">Sentence</th>
+	    <th>Result</th>
+	  </tr>
 
 	<%
 		String path = "E:\\Git\\1st_web\\upload\\" + multipartRequest.getFilesystemName("file");
@@ -60,18 +88,24 @@
 		for (int i = 0; i < list.size(); i++) {
 			List<String> line = list.get(i);
 			for (int j = 0; j < line.size(); j++) {
-				System.out.print(line.get(j) + ",");
-	 %>
-	
-	<%=line.get(j)%>,
+				String sen = line.get(j);
+				sen = sen.replaceAll("<", "&lt;");
+				sen = sen.replaceAll(">", "&gt;");
+				System.out.println(sen);
+	%>
+				<tr>
+	    		<td><%=sen%></td>
+	<%
+				String res = Inspect.Start(line.get(j));
+	%>
+	    		<td><i class="<%=res%>"></i></td>
+  				</tr>
 	<%
 		}
 	System.out.println();
-	%>
-	<br>
-	<%
 		}
 	%>
+	</table>
 
 </body>
 </html>
