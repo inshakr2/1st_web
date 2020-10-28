@@ -77,8 +77,10 @@
 	
 	<table>
 	  <tr>
+	  	<th>No</th>
 	    <th style="width:50%">Sentence</th>
 	    <th>Result</th>
+	    <th>Update</th>
 	  </tr>
 
 	<%
@@ -94,11 +96,13 @@
 				System.out.println(sen);
 	%>
 				<tr>
+				<td><%=i+1 %></td>
 	    		<td><%=sen%></td>
 	<%
 				String res = Inspect.Start(line.get(j));
 	%>
 	    		<td><i class="<%=res%>"></i></td>
+	    		<td><input type="checkbox"></td>
   				</tr>
 	<%
 		}
