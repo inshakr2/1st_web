@@ -1,8 +1,10 @@
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.io.File"%>
+<%@page import="java.io.FileInputStream"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="java.util.List"%>
+<%@page import='java.util.ArrayList' %>
 
 <%@page import="com.servlet.LoadUtils" %>
 <%@page import="com.servlet.Inspect" %>
@@ -18,39 +20,10 @@
 	<title>read</title>
 	
 	<style>
-	table {
-	  border-collapse: collapse;
-	  border-spacing: 0;
-	  width: 100%;
-	  border: 1px solid #ddd;
-	}
 	
-	th, td {
-	  text-align: center;
-	  padding: 16px;
-	}
-	
-	th:first-child, td:first-child {
-	  text-align: left;
-	}
-	
-	tr:nth-child(even) {
-	  background-color: #f2f2f2
-	}
-	
-	.fa-check {
-	  color: green;
-	}
-	
-	.fa-remove {
-	  color: red;
-	}
-	</style>
-	
-	<style>
 	body {font-family: Arial, Helvetica, sans-serif;}
 	* {box-sizing: border-box;}
-	
+
 	/* The popup form - hidden by default */
 	.form-popup {
 	  display: none;
@@ -63,7 +36,7 @@
 	
 	/* Add styles to the form container */
 	.form-container {
-	  max-width: 1000px;
+	  max-width: 300px;
 	  padding: 10px;
 	  background-color: white;
 	}
@@ -90,7 +63,7 @@
 	  padding: 16px 20px;
 	  border: none;
 	  cursor: pointer;
-	  width: 40%;
+	  width: 100%;
 	  margin-bottom:10px;
 	  opacity: 0.8;
 	}
@@ -103,6 +76,35 @@
 	/* Add some hover effects to buttons */
 	.form-container .btn:hover, .open-button:hover {
 	  opacity: 1;
+	}
+	
+	
+	table {
+	  border-collapse: collapse;
+	  border-spacing: 0;
+	  width: 100%;
+	  border: 1px solid #ddd;
+	}
+	
+	th, td {
+	  text-align: center;
+	  padding: 16px;
+	}
+	
+	th:first-child, td:first-child {
+	  text-align: left;
+	}
+	
+	tr:nth-child(even) {
+	  background-color: #f2f2f2
+	}
+	
+	.fa-check {
+	  color: green;
+	}
+	
+	.fa-remove {
+	  color: red;
 	}
 	</style>
 	
@@ -144,7 +146,7 @@
 
 	<%
 		String path = "E:\\Git\\1st_web\\upload\\" + multipartRequest.getFilesystemName("file");
-		
+			
 		List<List<String>> list = LoadUtils.Load(path);
 		for (int i = 0; i < list.size(); i++) {
 			List<String> line = list.get(i);
@@ -152,45 +154,50 @@
 				String sen = line.get(j);
 				sen = sen.replaceAll("<", "&lt;");
 				sen = sen.replaceAll(">", "&gt;");
+				System.out.println(sen);
 	%>
 				<tr>
 				<td><%=i+1 %></td>
 	    		<td><%=sen%></td>
 	<%
 				String res = Inspect.Start(line.get(j));
+			
 	%>
 	    		<td><i class="<%=res%>"></i></td>
 	    		<td>
-	    		<button class="open-button" onclick="openForm()">수정하기</button>
-					<div class="form-popup" id="myForm">
+	    		<button class="open-button" onclick="openForm()">Open Form</button>
+		    		<div class="form-popup" id="myForm">
 					  <form action="/action_page.php" class="form-container">
-					    <h1>수정하기</h1>
+					    <h1>수정할 문장을 입력하세요</h1>
 					
-					    <label for="update"><b>수정할 문장을 넣어주세요 </b></label>
-					    <input type="text" value="<%=line.get(j) %>" name="sen">
+					    <label for="NewSentence"><b>문장</b></label>
+					    <input type="text" value="<%=sen%>" name="email" required>
 					
-					    
-					    <button type="submit" class="btn">확인</button>
-					    <button type="button" class="btn cancel" onclick="closeForm()">취소</button>
+					    <button type="submit" class="btn">수정하기</button>
+					    <button type="button" class="btn cancel" onclick="closeForm()">닫기</button>
 					  </form>
 					</div>
 				</td>
   				</tr>
+  				
 	<%
 		}
 	System.out.println();
 		}
 	%>
 	</table>
-	<script>
-	function openForm() {
-	  document.getElementById("myForm").style.display = "block";
-	}
-	
-	function closeForm() {
-	  document.getElementById("myForm").style.display = "none";
-	}
+		<script>
+		function openForm() {
+		  document.getElementById("myForm").style.display = "block";
+		  
+		}
+		
+		function closeForm() {
+		  document.getElementById("myForm").style.display = "none";
+		}
 	</script>
+	
+
 
 </body>
 </html>
