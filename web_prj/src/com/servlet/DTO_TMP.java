@@ -3,19 +3,19 @@ package com.servlet;
 public class DTO_TMP {
 	
 	int sen_id;
-	String sen_org;
+	String sen_tag;
 	
-	public DTO_TMP(int sen_id, String sen_org) {
+	public DTO_TMP(int sen_id, String sen_tag) {
 		this.sen_id = sen_id;
-		this.sen_org = sen_org;
+		this.sen_tag = sen_tag;
 	}
 
 	public int getId() {
 		return sen_id;
 	}
 
-	public String getOrg() {
-		return sen_org;
+	public String getSentence() {
+		return sen_tag;
 	}
 
 }
