@@ -99,4 +99,31 @@ public class DAO {
 			
 			return list;
 		}
+	
+	public void Insert (String org_sentence, String tag_sentence) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DriverManager.getConnection(url, id, pw);
+			pstmt = con.prepareStatement(
+					"INSERT INTO sr_pjt(sen_id, sen_org, sen_tag) "
+					+"VALUES (sen_seq.NEXTVAL, ?, ?) ");
+			
+			pstmt.setString(1, org_sentence);
+			pstmt.setString(2, tag_sentence);
+			pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
+			}catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
 }
