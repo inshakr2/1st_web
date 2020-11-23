@@ -9,7 +9,8 @@
 <body>
 	<fieldset>
 		<legend> <h2>Introduce</h2> </legend>
-		웹 서비스 개발중..
+		<h3>웹 서비스 개발 프로젝트</h3>
+		개체명 인식 문장 검사 웹 서비스
 		
 	</fieldset>
 	
