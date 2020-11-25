@@ -1,6 +1,6 @@
 package com.servlet;
 
-import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,16 +9,27 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import javax.servlet.ServletContext;
 
 public class DAO {
 	
 	String root = this.getClass().getResource("/..").getPath();
-	InputStream reader = getClass().getResourceAsStream(root + "db.properties");
+	String path = root + "db.properties";
+	InputStream reader = this.getClass().getClassLoader().getResourceAsStream("Web-INF/web.xml");
     Properties prop = new Properties();
     
+    public String get(String key) {
+    	try {
+			prop.load(reader);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return prop.getProperty(key);
+    }
     
-    
+	String driver = this.get("driver");
+	String url = this.get("url");
+	String id = this.get("id");
+	String pw = this.get("pw");
     
     
 

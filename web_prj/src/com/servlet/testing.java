@@ -36,6 +36,11 @@ public class testing extends HttpServlet {
         System.out.println(d);
         
         
+        String root = this.getClass().getResource("/..").getPath();
+    	String path = root.substring(1) + "db.properties";
+    	System.out.println(path.
+				replaceAll("/", "\\\\"));
+        
         try {
             properties.load(resource);
             System.out.println(properties.getProperty("driver"));
