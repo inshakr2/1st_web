@@ -12,9 +12,7 @@ import java.util.Properties;
 
 public class DAO {
 	
-	String root = this.getClass().getResource("/..").getPath();
-	String path = root + "db.properties";
-	InputStream reader = this.getClass().getClassLoader().getResourceAsStream("Web-INF/web.xml");
+	InputStream reader = this.getClass().getClassLoader().getResourceAsStream("/db.properties");
     Properties prop = new Properties();
     
     public String get(String key) {
@@ -30,8 +28,7 @@ public class DAO {
 	String url = this.get("url");
 	String id = this.get("id");
 	String pw = this.get("pw");
-    
-    
+	String table = this.get("main_table");
 
 //	String driver = "oracle.jdbc.driver.OracleDriver";
 //	String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -59,7 +56,7 @@ public class DAO {
 		
 		try {
 			con = DriverManager.getConnection(url, id, pw);
-			String sql = "SELECT * FROM sr_pjt";
+			String sql = "SELECT * FROM " + table;
 			
 			pstmt = con.prepareStatement(sql);
 			res = pstmt.executeQuery();
@@ -97,7 +94,7 @@ public class DAO {
 			
 			try {
 				con = DriverManager.getConnection(url, id, pw);
-				String sql = "SELECT * FROM sr_pjt WHERE " + where;
+				String sql = "SELECT * FROM "+ table +" WHERE " + where;
 				
 				pstmt = con.prepareStatement(sql);
 				res = pstmt.executeQuery();
@@ -132,7 +129,7 @@ public class DAO {
 		try {
 			con = DriverManager.getConnection(url, id, pw);
 			pstmt = con.prepareStatement(
-					"INSERT INTO sr_pjt(sen_id, sen_org, sen_tag) "
+					"INSERT INTO " + table + "(sen_id, sen_org, sen_tag) "
 					+"VALUES (sen_seq.NEXTVAL, ?, ?) ");
 			
 			pstmt.setString(1, org_sentence);

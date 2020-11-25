@@ -1,17 +1,38 @@
 package com.servlet;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class DAO_TMP {
+	
+	InputStream reader = this.getClass().getClassLoader().getResourceAsStream("/db.properties");
+    Properties prop = new Properties();
+    
+    public String get(String key) {
+    	try {
+			prop.load(reader);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return prop.getProperty(key);
+    }
+    
+	String driver = this.get("driver");
+	String url = this.get("url");
+	String id = this.get("id");
+	String pw = this.get("pw");
+	String table = this.get("temp_table");
 
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	String id = "saerom";
-	String pw = "1111";
+//	String driver = "oracle.jdbc.driver.OracleDriver";
+//	String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//	String id = "saerom";
+//	String pw = "1111";
 	
 	// Table 정보
 	// tmp_pjt : 업로드용 임시 테이블
@@ -30,7 +51,7 @@ public class DAO_TMP {
 		
 		try {
 			con = DriverManager.getConnection(url, id, pw);
-			pstmt = con.prepareStatement("INSERT INTO tmp_pjt(sen_id, sen_tag) "
+			pstmt = con.prepareStatement("INSERT INTO "+ table +"(sen_id, sen_tag) "
 						+"VALUES (?, ?) ");
 			
 			pstmt.setString(1, sentence_id);
@@ -56,8 +77,8 @@ public class DAO_TMP {
 			
 			try {
 				con = DriverManager.getConnection(url, id, pw);
-				pstmt = con.prepareStatement("DELETE FROM tmp_pjt"
-											+ " WHERE sen_id > ?");
+				pstmt = con.prepareStatement("DELETE FROM " + table +
+											 " WHERE sen_id > ?");
 				pstmt.setString(1, "0");
 				pstmt.executeUpdate();
 				
@@ -80,8 +101,8 @@ public class DAO_TMP {
 		
 		try {
 			con = DriverManager.getConnection(url, id, pw);
-			pstmt = con.prepareStatement("DELETE FROM tmp_pjt"
-										+ " WHERE sen_id = ?");
+			pstmt = con.prepareStatement("DELETE FROM " + table +
+										 " WHERE sen_id = ?");
 			pstmt.setString(1, sentence_id);
 			pstmt.executeUpdate();
 			
@@ -104,7 +125,7 @@ public class DAO_TMP {
 		
 		try {
 			con = DriverManager.getConnection(url, id, pw);
-			pstmt = con.prepareStatement("UPDATE tmp_pjt"
+			pstmt = con.prepareStatement("UPDATE " + table
 										+ " SET sen_tag = ?"
 										+ " WHERE sen_id = ?");
 			pstmt.setString(1, sentence);
@@ -132,7 +153,7 @@ public class DAO_TMP {
 			
 			try {
 				con = DriverManager.getConnection(url, id, pw);
-				String sql = "SELECT * FROM tmp_pjt ORDER BY sen_id";
+				String sql = "SELECT * FROM "+ table +" ORDER BY sen_id";
 				
 				pstmt = con.prepareStatement(sql);
 				res = pstmt.executeQuery();

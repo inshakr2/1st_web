@@ -1,2 +1,4 @@
-/config/
+/db.properties
+/lib/
+/web.xml
 /com/
