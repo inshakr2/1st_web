@@ -1,21 +1,34 @@
 package com.servlet;
 
+import java.io.FileReader;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.servlet.ServletContext;
 
 public class DAO {
+	
+	String root = this.getClass().getResource("/..").getPath();
+	InputStream reader = getClass().getResourceAsStream(root + "db.properties");
+    Properties prop = new Properties();
+    
+    
+    
+    
+    
 
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	String id = "saerom";
-	String pw = "1111";
+//	String driver = "oracle.jdbc.driver.OracleDriver";
+//	String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//	String id = "saerom";
+//	String pw = "1111";
 	
 	// Table 정보
 	// sr_pjt : 메인 테이블
-	// tmp_pjt : 업로드용 임시 테이블
 	
 	public DAO() {
 		try {

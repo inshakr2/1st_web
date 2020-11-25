@@ -1,9 +1,16 @@
 package com.servlet;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.net.URL;
+import java.util.Properties;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,20 +21,30 @@ import javax.servlet.http.HttpServletResponse;
 public class testing extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DAO_TMP dao_TMP = new DAO_TMP();
-		
-		response.setContentType("text/html; charset=UTF-8");
-		String sentence = request.getParameter("sentence");
-		String sentence_id = request.getParameter("sentence_id");
-		
-		PrintWriter out = response.getWriter();
-		
-		out.println(sentence);
-		out.println(sentence_id);
-		
-		dao_TMP.Update(sentence_id, sentence);
-		
-		response.sendRedirect("read_v2.jsp");
+		ServletContext sc = request.getServletContext();
+        Properties properties = new Properties();
+        FileReader resource = new FileReader(sc.getRealPath(sc.getInitParameter("contextConfigLocation")));
+        
+        String a = sc.getRealPath(sc.getInitParameter("contextConfigLocation"));
+        String b = this.getClass().getResource("").getPath();
+        String c = this.getClass().getResource("/").getPath();
+        String d = this.getClass().getResource("/..").getPath();
+        
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+        System.out.println(d);
+        
+        
+        try {
+            properties.load(resource);
+            System.out.println(properties.getProperty("driver"));
+            System.out.println(properties.getProperty("id"));
+            System.out.println(properties.getProperty("pw"));
+            System.out.println(properties.getProperty("url"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 		
 	}
 
