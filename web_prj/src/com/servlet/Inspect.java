@@ -7,12 +7,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Inspect {
-	
+
 	static List<String> Loadtag() throws IOException {
 		
 		List<String> tag = new ArrayList<String>();
 		
-		String path = "E:\\Git\\1st_web\\web_prj\\src\\config\\tag_con";
+		String path = Inspect.class.getResource("/tag.json").getPath();
+		//String path = "E:\\Git\\1st_web\\web_prj\\src\\config\\tag_con";
+		
 		List<List<String>> list = LoadUtils.Load(path);
 		for(int i=0; i<list.size(); i++) {
 			List<String> line = list.get(i);
