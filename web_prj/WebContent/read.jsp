@@ -1,3 +1,4 @@
+<%@page import="org.apache.poi.util.SystemOutLogger"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.io.File"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
@@ -106,8 +107,8 @@
 	</head>
 	<body>
 		<%
-		
-		String saveDir = "E:\\Git\\1st_web\\upload";
+		String uploadParam = getServletContext().getInitParameter("UploadLocation");
+		String saveDir = getServletContext().getRealPath(uploadParam);
 		int maxSize = 1024 * 1024 * 100;
 		String encType = "UTF-8";
 		DAO_TMP dao_TMP = new DAO_TMP();
@@ -121,8 +122,11 @@
 			MultipartRequest multipartRequest = new MultipartRequest(request, saveDir, maxSize, encType,
 					new DefaultFileRenamePolicy());
 			File file = multipartRequest.getFile("file");
-			String path = "E:\\Git\\1st_web\\upload\\" 
-							+ multipartRequest.getFilesystemName("file");
+			String path = getServletContext().getRealPath(uploadParam)
+								+ "/" + multipartRequest.getFilesystemName("file");
+			System.out.println(path);
+		/* 	String path = "E:\\Git\\1st_web\\upload\\" 
+							+ multipartRequest.getFilesystemName("file"); */
 			
 	
 			List<List<String>> list = LoadUtils.Load(path);
